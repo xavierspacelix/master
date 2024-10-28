@@ -53,7 +53,7 @@ const defaultFromData: TFormData = {
 };
 
 export const InstanceSetupForm: FC = (props) => {
-  const {} = props;
+  const { } = props;
   // search params
   const searchParams = useSearchParams();
   const firstNameParam = searchParams.get("first_name") || undefined;
@@ -118,11 +118,11 @@ export const InstanceSetupForm: FC = (props) => {
   const isButtonDisabled = useMemo(
     () =>
       !isSubmitting &&
-      formData.first_name &&
-      formData.email &&
-      formData.password &&
-      getPasswordStrength(formData.password) === E_PASSWORD_STRENGTH.STRENGTH_VALID &&
-      formData.password === formData.confirm_password
+        formData.first_name &&
+        formData.email &&
+        formData.password &&
+        getPasswordStrength(formData.password) === E_PASSWORD_STRENGTH.STRENGTH_VALID &&
+        formData.password === formData.confirm_password
         ? false
         : true,
     [formData.confirm_password, formData.email, formData.first_name, formData.password, isSubmitting]

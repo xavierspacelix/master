@@ -20,17 +20,17 @@ class S3Storage(S3Boto3Storage):
 
     def __init__(self, request=None):
         # Get the AWS credentials and bucket name from the environment
-        self.aws_access_key_id = os.environ.get("AWS_ACCESS_KEY_ID")
+        self.aws_access_key_id = os.environ.get("AWS_ACCESS_KEY_ID","jARsBpczzZibxp2vBOM2")
         # Use the AWS_SECRET_ACCESS_KEY environment variable for the secret key
-        self.aws_secret_access_key = os.environ.get("AWS_SECRET_ACCESS_KEY")
+        self.aws_secret_access_key = os.environ.get("AWS_SECRET_ACCESS_KEY","p2BvqoPry3pPUOFpVsQD0uF3xfEfVTndnLRJur6R")
         # Use the AWS_S3_BUCKET_NAME environment variable for the bucket name
-        self.aws_storage_bucket_name = os.environ.get("AWS_S3_BUCKET_NAME")
+        self.aws_storage_bucket_name = os.environ.get("AWS_S3_BUCKET_NAME","uploads")
         # Use the AWS_REGION environment variable for the region
         self.aws_region = os.environ.get("AWS_REGION")
         # Use the AWS_S3_ENDPOINT_URL environment variable for the endpoint URL
         self.aws_s3_endpoint_url = os.environ.get(
-            "AWS_S3_ENDPOINT_URL"
-        ) or os.environ.get("MINIO_ENDPOINT_URL")
+            "AWS_S3_ENDPOINT_URL","http://localhost:9000"
+        ) or os.environ.get("MINIO_ENDPOINT_URL", "http://localhost:9000")
 
         if os.environ.get("USE_MINIO") == "1":
             # Create an S3 client for MinIO

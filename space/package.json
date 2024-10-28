@@ -6,7 +6,7 @@
     "dev": "turbo run develop",
     "develop": "next dev -p 3002",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p 3002",
     "lint": "eslint . --ext .ts,.tsx",
     "lint:errors": "eslint . --ext .ts,.tsx --quiet",
     "export": "next export"

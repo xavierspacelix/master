@@ -136,7 +136,10 @@ CORS_ALLOW_CREDENTIALS = True
 cors_origins_raw = os.environ.get("CORS_ALLOWED_ORIGINS", "")
 # filter out empty strings
 cors_allowed_origins = [
-    origin.strip() for origin in cors_origins_raw.split(",") if origin.strip()
+    "http://192.168.1.8:3003",
+    "http://192.168.1.8:3002",
+    "http://192.168.1.8:3001",
+    "http://192.168.1.8:3000",
 ]
 if cors_allowed_origins:
     CORS_ALLOWED_ORIGINS = cors_allowed_origins
@@ -171,10 +174,10 @@ else:
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.postgresql",
-            "NAME": os.environ.get("POSTGRES_DB"),
-            "USER": os.environ.get("POSTGRES_USER"),
-            "PASSWORD": os.environ.get("POSTGRES_PASSWORD"),
-            "HOST": os.environ.get("POSTGRES_HOST"),
+            "NAME": os.environ.get("POSTGRES_DB", 'proline_db'),
+            "USER": os.environ.get("POSTGRES_USER", 'proline'),
+            "PASSWORD": os.environ.get("POSTGRES_PASSWORD", "proline"),
+            "HOST": os.environ.get("POSTGRES_HOST", 'localhost'),
             "PORT": os.environ.get("POSTGRES_PORT", "5432"),
         }
     }
@@ -260,8 +263,8 @@ STORAGES = {
 STORAGES["default"] = {
     "BACKEND": "plane.settings.storage.S3Storage",
 }
-AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID", "access-key")
-AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY", "secret-key")
+AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID", "jARsBpczzZibxp2vBOM2")
+AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY", "p2BvqoPry3pPUOFpVsQD0uF3xfEfVTndnLRJur6R")
 AWS_STORAGE_BUCKET_NAME = os.environ.get("AWS_S3_BUCKET_NAME", "uploads")
 AWS_REGION = os.environ.get("AWS_REGION", "")
 AWS_DEFAULT_ACL = "public-read"
@@ -269,7 +272,7 @@ AWS_QUERYSTRING_AUTH = False
 AWS_S3_FILE_OVERWRITE = False
 AWS_S3_ENDPOINT_URL = os.environ.get(
     "AWS_S3_ENDPOINT_URL", None
-) or os.environ.get("MINIO_ENDPOINT_URL", None)
+) or os.environ.get("MINIO_ENDPOINT_URL", "http://localhost:9000")
 if AWS_S3_ENDPOINT_URL and USE_MINIO:
     parsed_url = urlparse(os.environ.get("WEB_URL", "http://localhost"))
     AWS_S3_CUSTOM_DOMAIN = f"{parsed_url.netloc}/{AWS_STORAGE_BUCKET_NAME}"
@@ -278,9 +281,9 @@ if AWS_S3_ENDPOINT_URL and USE_MINIO:
 # RabbitMQ connection settings
 RABBITMQ_HOST = os.environ.get("RABBITMQ_HOST", "localhost")
 RABBITMQ_PORT = os.environ.get("RABBITMQ_PORT", "5672")
-RABBITMQ_USER = os.environ.get("RABBITMQ_USER", "guest")
-RABBITMQ_PASSWORD = os.environ.get("RABBITMQ_PASSWORD", "guest")
-RABBITMQ_VHOST = os.environ.get("RABBITMQ_VHOST", "/")
+RABBITMQ_USER = os.environ.get("RABBITMQ_USER", "proline")
+RABBITMQ_PASSWORD = os.environ.get("RABBITMQ_PASSWORD", "proline")
+RABBITMQ_VHOST = os.environ.get("RABBITMQ_VHOST", "proline")
 AMQP_URL = os.environ.get("AMQP_URL")
 
 # Celery Configuration
