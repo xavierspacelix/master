@@ -26,6 +26,18 @@ from opentelemetry.sdk.trace.export import BatchSpanProcessor
 from opentelemetry.sdk.resources import Resource
 from opentelemetry.instrumentation.django import DjangoInstrumentor
 
+# Mengambil nilai variabel FILE_SIZE_LIMIT
+file_size_limit = os.environ.get('FILE_SIZE_LIMIT', 'default_value')
+
+# Mengambil nilai variabel dollar
+dollar = os.environ.get('dollar', 'default_value')
+
+# Mengambil nilai variabel SECRET_KEY
+secret_key = os.environ.get('SECRET_KEY', 'default_value')
+
+print(f'File Size Limit: {file_size_limit}')
+print(f'Dollar: {dollar}')
+print(f'Secret Key: {secret_key}')
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -42,7 +54,7 @@ service_name = os.environ.get("SERVICE_NAME", "plane-ce-api")
 resource = Resource.create({"service.name": service_name})
 trace.set_tracer_provider(TracerProvider(resource=resource))
 # Configure the OTLP exporter
-otel_endpoint = os.environ.get("OTLP_ENDPOINT", "https://telemetry.plane.so")
+otel_endpoint = os.environ.get("OTLP_ENDPOINT")
 otlp_exporter = OTLPSpanExporter(endpoint=otel_endpoint)
 span_processor = BatchSpanProcessor(otlp_exporter)
 trace.get_tracer_provider().add_span_processor(span_processor)
@@ -136,10 +148,10 @@ CORS_ALLOW_CREDENTIALS = True
 cors_origins_raw = os.environ.get("CORS_ALLOWED_ORIGINS", "")
 # filter out empty strings
 cors_allowed_origins = [
-    "http://192.168.1.8:3003",
-    "http://192.168.1.8:3002",
-    "http://192.168.1.8:3001",
-    "http://192.168.1.8:3000",
+    "http://localhost:3003",
+    "http://localhost:3002",
+    "http://localhost:3001",
+    "http://localhost:3000",
 ]
 if cors_allowed_origins:
     CORS_ALLOWED_ORIGINS = cors_allowed_origins
@@ -183,7 +195,7 @@ else:
     }
 
 # Redis Config
-REDIS_URL = os.environ.get("REDIS_URL")
+REDIS_URL = os.environ.get("REDIS_URL", 'redis://localhost:6379')
 REDIS_SSL = REDIS_URL and "rediss" in REDIS_URL
 
 if REDIS_SSL:

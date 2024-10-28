@@ -2,11 +2,6 @@ import redis
 from django.conf import settings
 from urllib.parse import urlparse
 
-import logging
-
-logger = logging.getLogger(__name__)
-
-logger.debug(f"REDIS_URL: {settings.REDIS_URL}")
 def redis_instance():
     # connect to redis
     if settings.REDIS_SSL:
